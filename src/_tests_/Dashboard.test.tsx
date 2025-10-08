@@ -1,5 +1,5 @@
 // __tests__/Dashboard.test.tsx
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { render, screen } from '@testing-library/react';
 import Dashboard from '@/app/dashboard/page';
 import dashboardData from '@/app/data/dashboard';
@@ -27,9 +27,11 @@ jest.mock('next/image', () => {
 // Mock Recharts components
 // ----------------------
 jest.mock('recharts', () => {
-  const React = require('react');
+
   const createMock = (name: string) => {
-    const Comp: React.FC<any> = (props) => <div data-testid={name}>{props.children}</div>;
+    const Comp: React.FC<PropsWithChildren<{}>> = ({ children }) => (
+      <div data-testid={name}>{children}</div>
+    );
     Comp.displayName = name;
     return Comp;
   };

@@ -7,21 +7,12 @@ import dashboardData from '@/app/data/dashboard';
 // Mock Recharts components
 // ----------------------
 jest.mock('recharts', () => {
-  const React = require('react');
-
-  const createMock = (name: string) => {
-    const Comp: React.FC<any> = ({ children }) => <div data-testid={name}>{children}</div>;
-    Comp.displayName = name;
-    return Comp;
-  };
-
+  const OriginalRecharts = jest.requireActual('recharts');
   return {
-    ResponsiveContainer: createMock('ResponsiveContainer'),
-    BarChart: createMock('BarChart'),
-    Bar: createMock('Bar'),
-    Cell: createMock('Cell'),
-    XAxis: createMock('XAxis'),
-    YAxis: createMock('YAxis'),
+    ...OriginalRecharts,
+    ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
+      <div data-testid="responsive-container">{children}</div>
+    ),
   };
 });
 

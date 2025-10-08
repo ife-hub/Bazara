@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { render, screen } from '@testing-library/react';
 import ChangeRequestByStatusChart from '@/components/ChangeRequestByStatusChart';
 import dashboardData from '@/app/data/dashboard';
@@ -7,10 +7,10 @@ import dashboardData from '@/app/data/dashboard';
 // Mock Recharts components
 // ----------------------
 jest.mock('recharts', () => {
-  const React = require('react');
-
   const createMock = (name: string) => {
-    const Comp: React.FC<any> = ({ children }) => <div data-testid={name}>{children}</div>;
+    const Comp: React.FC<PropsWithChildren<{}>> = ({ children }) => (
+      <div data-testid={name}>{children}</div>
+    );
     Comp.displayName = name;
     return Comp;
   };
@@ -37,17 +37,12 @@ jest.mock('lucide-react', () => ({
 // Mock Next.js Image
 // ----------------------
 jest.mock('next/image', () => {
-  const NextImage = ({
-    src,
-    alt,
-    width,
-    height,
-  }: {
+  const NextImage: React.FC<{
     src: string;
     alt?: string;
     width?: number | string;
     height?: number | string;
-  }) => <img src={src} alt={alt} width={width} height={height} />;
+  }> = ({ src, alt, width, height }) => <img src={src} alt={alt} width={width} height={height} />;
 
   NextImage.displayName = 'NextImage';
   return NextImage;
