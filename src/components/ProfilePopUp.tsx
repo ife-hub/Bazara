@@ -17,8 +17,12 @@ export default function ProfilePopup() {
       await logout();       // call API to clear cookie
       clearToken();         // clear Zustand state
       router.push("/login"); // redirect to login
-    } catch (err: any) {
-      alert(err?.message || "Logout failed");
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+      alert(err.message);
+    } else {
+      alert("Logout failed");
+    }
     }
   };
 

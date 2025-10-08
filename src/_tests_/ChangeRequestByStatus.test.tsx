@@ -1,27 +1,40 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ChangeRequestByStatus from '@/components/ChangeRequestByStatus';
 import dashboardData from '@/app/data/dashboard';
-import React from 'react';
 
+// ----------------------
 // Mock Recharts components
+// ----------------------
 jest.mock('recharts', () => {
-  const OriginalRecharts = jest.requireActual('recharts');
+  const React = require('react');
+
+  const createMock = (name: string) => {
+    const Comp: React.FC<any> = ({ children }) => <div data-testid={name}>{children}</div>;
+    Comp.displayName = name;
+    return Comp;
+  };
+
   return {
-    ...OriginalRecharts,
-    ResponsiveContainer: ({ children }: any) => <div>{children}</div>,
-    BarChart: ({ children }: any) => <div>{children}</div>,
-    Bar: ({ children }: any) => <div>{children}</div>,
-    Cell: ({ children }: any) => <div>{children}</div>,
-    XAxis: () => <div />,
-    YAxis: () => <div />,
+    ResponsiveContainer: createMock('ResponsiveContainer'),
+    BarChart: createMock('BarChart'),
+    Bar: createMock('Bar'),
+    Cell: createMock('Cell'),
+    XAxis: createMock('XAxis'),
+    YAxis: createMock('YAxis'),
   };
 });
 
+// ----------------------
 // Mock lucide-react icons
+// ----------------------
 jest.mock('lucide-react', () => ({
   MoreVertical: () => <span>MoreVerticalIcon</span>,
 }));
 
+// ----------------------
+// Tests
+// ----------------------
 describe('ChangeRequestByStatus Component', () => {
   let container: HTMLElement;
 
@@ -41,7 +54,7 @@ describe('ChangeRequestByStatus Component', () => {
   });
 
   it('renders the correct number of legend color boxes', () => {
-    const colorBoxes = container.querySelectorAll('div.w-3.h-3.rounded'); 
+    const colorBoxes = container.querySelectorAll('div.w-3.h-3.rounded');
     expect(colorBoxes.length).toBe(dashboardData.changeByStatusSummary.length);
   });
 

@@ -36,10 +36,13 @@ export default function LoginPage(){
                 setToken(res.token);
                 // redirect to dashboard
                 router.push("/dashboard");
-        } catch (err: any) {
-                // show error inline via alert or set form error (simple approach)
-                alert(err?.message ?? "Unexpected error");
-        }
+        } catch (err: unknown) {
+  if (err instanceof Error) {
+    alert(err.message);
+  } else {
+    alert("Logout failed");
+  }
+}
     }
 
     

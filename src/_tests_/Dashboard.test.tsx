@@ -1,47 +1,134 @@
 // __tests__/Dashboard.test.tsx
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Dashboard from '@/app/dashboard/page'; // adjust the path if needed
+import Dashboard from '@/app/dashboard/page';
 import dashboardData from '@/app/data/dashboard';
 
 // ----------------------
 // Mock Next.js Image
 // ----------------------
-jest.mock('next/image', () => (props: any) => <img {...props} />);
+jest.mock('next/image', () => {
+  const NextImage = ({
+    src,
+    alt,
+    width,
+    height,
+  }: {
+    src: string;
+    alt?: string;
+    width?: number | string;
+    height?: number | string;
+  }) => <img src={src} alt={alt} width={width} height={height} />;
+  NextImage.displayName = 'NextImage';
+  return NextImage;
+});
+
+// ----------------------
+// Mock Recharts components
+// ----------------------
 jest.mock('recharts', () => {
   const React = require('react');
+  const createMock = (name: string) => {
+    const Comp: React.FC<any> = (props) => <div data-testid={name}>{props.children}</div>;
+    Comp.displayName = name;
+    return Comp;
+  };
+
   return {
-    LineChart: (props: any) => <div data-testid="LineChart">{props.children}</div>,
-    Line: (props: any) => <div data-testid="Line" />,
-    BarChart: (props: any) => <div data-testid="BarChart">{props.children}</div>,
-    Bar: (props: any) => <div data-testid="Bar" />,
-    PieChart: (props: any) => <div data-testid="PieChart">{props.children}</div>,
-    Pie: (props: any) => <div data-testid="Pie" />,
-    Cell: (props: any) => <div data-testid="Cell" />,
-    XAxis: (props: any) => <div data-testid="XAxis" />,
-    YAxis: (props: any) => <div data-testid="YAxis" />,
-    CartesianGrid: (props: any) => <div data-testid="CartesianGrid" />,
-    Tooltip: (props: any) => <div data-testid="Tooltip" />,
-    Legend: (props: any) => <div data-testid="Legend" />,
-    ResponsiveContainer: (props: any) => <div data-testid="ResponsiveContainer">{props.children}</div>,
+    LineChart: createMock('LineChart'),
+    Line: createMock('Line'),
+    BarChart: createMock('BarChart'),
+    Bar: createMock('Bar'),
+    PieChart: createMock('PieChart'),
+    Pie: createMock('Pie'),
+    Cell: createMock('Cell'),
+    XAxis: createMock('XAxis'),
+    YAxis: createMock('YAxis'),
+    CartesianGrid: createMock('CartesianGrid'),
+    Tooltip: createMock('Tooltip'),
+    Legend: createMock('Legend'),
+    ResponsiveContainer: createMock('ResponsiveContainer'),
   };
 });
 
 // ----------------------
-// Mock child components
+// Mock child components (inline to avoid hoisting issues)
 // ----------------------
-jest.mock('@/components/Headers', () => () => <div>Headers Component</div>);
-jest.mock('@/components/TicketsResolved', () => () => <div>TicketsResolved Component</div>);
-jest.mock('@/components/PendingTickets', () => () => <div>PendingTickets Component</div>);
-jest.mock('@/components/PendingApprovals', () => () => <div>PendingApprovals Component</div>);
-jest.mock('@/components/ChangeResultByCategory', () => () => <div>ChangeResultsByCategory Component</div>);
-jest.mock('@/components/AverageIncidentResponseTime', () => () => <div>AverageIncidentResponseTime Component</div>);
-jest.mock('@/components/AverageChangeResponseTime', () => () => <div>AverageChangeResponseTime Component</div>);
-jest.mock('@/components/ChangeRequestByStatusChart', () => () => <div>ChangeRequestByStatusChart Component</div>);
-jest.mock('@/components/AwaitingApproval', () => () => <div>AwaitingApproval Component</div>);
-jest.mock('@/components/IncidentTicketsTable', () => () => <div>IncidentTicketsTable Component</div>);
-jest.mock('@/components/TicketResolutionChart', () => () => <div>TicketResolutionChart Component</div>);
-jest.mock('@/components/RequestTickets', () => () => <div>RequestTickets Component</div>);
+jest.mock('@/components/Headers', () => {
+  const Comp = () => <div>Headers Component</div>;
+  Comp.displayName = 'Headers';
+  return Comp;
+});
 
+jest.mock('@/components/TicketsResolved', () => {
+  const Comp = () => <div>TicketsResolved Component</div>;
+  Comp.displayName = 'TicketsResolved';
+  return Comp;
+});
+
+jest.mock('@/components/PendingTickets', () => {
+  const Comp = () => <div>PendingTickets Component</div>;
+  Comp.displayName = 'PendingTickets';
+  return Comp;
+});
+
+jest.mock('@/components/PendingApprovals', () => {
+  const Comp = () => <div>PendingApprovals Component</div>;
+  Comp.displayName = 'PendingApprovals';
+  return Comp;
+});
+
+jest.mock('@/components/ChangeResultByCategory', () => {
+  const Comp = () => <div>ChangeResultsByCategory Component</div>;
+  Comp.displayName = 'ChangeResultsByCategory';
+  return Comp;
+});
+
+jest.mock('@/components/AverageIncidentResponseTime', () => {
+  const Comp = () => <div>AverageIncidentResponseTime Component</div>;
+  Comp.displayName = 'AverageIncidentResponseTime';
+  return Comp;
+});
+
+jest.mock('@/components/AverageChangeResponseTime', () => {
+  const Comp = () => <div>AverageChangeResponseTime Component</div>;
+  Comp.displayName = 'AverageChangeResponseTime';
+  return Comp;
+});
+
+jest.mock('@/components/ChangeRequestByStatusChart', () => {
+  const Comp = () => <div>ChangeRequestByStatusChart Component</div>;
+  Comp.displayName = 'ChangeRequestByStatusChart';
+  return Comp;
+});
+
+jest.mock('@/components/AwaitingApproval', () => {
+  const Comp = () => <div>AwaitingApproval Component</div>;
+  Comp.displayName = 'AwaitingApproval';
+  return Comp;
+});
+
+jest.mock('@/components/IncidentTicketsTable', () => {
+  const Comp = () => <div>IncidentTicketsTable Component</div>;
+  Comp.displayName = 'IncidentTicketsTable';
+  return Comp;
+});
+
+jest.mock('@/components/TicketResolutionChart', () => {
+  const Comp = () => <div>TicketResolutionChart Component</div>;
+  Comp.displayName = 'TicketResolutionChart';
+  return Comp;
+});
+
+jest.mock('@/components/RequestTickets', () => {
+  const Comp = () => <div>RequestTickets Component</div>;
+  Comp.displayName = 'RequestTickets';
+  return Comp;
+});
+
+// ----------------------
+// Tests
+// ----------------------
 describe('Dashboard Component', () => {
   it('renders the header', async () => {
     render(<Dashboard />);
@@ -50,8 +137,6 @@ describe('Dashboard Component', () => {
 
   it('renders metric cards with correct values', async () => {
     render(<Dashboard />);
-
-    // Wait for each metric card to render
     expect(await screen.findByText(dashboardData.metrics.totalUsers.value.toLocaleString())).toBeInTheDocument();
     expect(await screen.findByText(dashboardData.metrics.totalOpenTickets.value.toLocaleString())).toBeInTheDocument();
     expect(await screen.findByText(dashboardData.metrics.totalClosedTickets.value.toLocaleString())).toBeInTheDocument();

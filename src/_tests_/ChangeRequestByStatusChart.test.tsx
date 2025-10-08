@@ -3,29 +3,59 @@ import { render, screen } from '@testing-library/react';
 import ChangeRequestByStatusChart from '@/components/ChangeRequestByStatusChart';
 import dashboardData from '@/app/data/dashboard';
 
+// ----------------------
 // Mock Recharts components
+// ----------------------
 jest.mock('recharts', () => {
-  const OriginalRecharts = jest.requireActual('recharts');
+  const React = require('react');
+
+  const createMock = (name: string) => {
+    const Comp: React.FC<any> = ({ children }) => <div data-testid={name}>{children}</div>;
+    Comp.displayName = name;
+    return Comp;
+  };
+
   return {
-    ...OriginalRecharts,
-    ResponsiveContainer: ({ children }: any) => <div>{children}</div>,
-    LineChart: ({ children }: any) => <div>{children}</div>,
-    Line: ({ children }: any) => <div>{children}</div>,
-    XAxis: () => <div />,
-    YAxis: () => <div />,
-    CartesianGrid: () => <div />,
-    Tooltip: () => <div />,
+    ResponsiveContainer: createMock('ResponsiveContainer'),
+    LineChart: createMock('LineChart'),
+    Line: createMock('Line'),
+    XAxis: createMock('XAxis'),
+    YAxis: createMock('YAxis'),
+    CartesianGrid: createMock('CartesianGrid'),
+    Tooltip: createMock('Tooltip'),
   };
 });
 
+// ----------------------
 // Mock lucide-react icons
+// ----------------------
 jest.mock('lucide-react', () => ({
   Calendar: () => <span>CalendarIcon</span>,
 }));
 
+// ----------------------
 // Mock Next.js Image
-jest.mock('next/image', () => (props: any) => <img {...props} alt={props.alt} />);
+// ----------------------
+jest.mock('next/image', () => {
+  const NextImage = ({
+    src,
+    alt,
+    width,
+    height,
+  }: {
+    src: string;
+    alt?: string;
+    width?: number | string;
+    height?: number | string;
+  }) => <img src={src} alt={alt} width={width} height={height} />;
 
+  NextImage.displayName = 'NextImage';
+  return NextImage;
+});
+
+// ----------------------
+// Tests
+// ----------------------
 describe('ChangeRequestByStatusChart Component', () => {
   let container: HTMLElement;
 

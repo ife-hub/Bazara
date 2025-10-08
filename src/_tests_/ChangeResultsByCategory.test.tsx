@@ -3,14 +3,36 @@ import { render, screen } from '@testing-library/react';
 import ChangeResultsByCategory from '@/components/ChangeResultByCategory';
 import dashboardData from '@/app/data/dashboard';
 
+// ----------------------
 // Mock lucide-react icons
+// ----------------------
 jest.mock('lucide-react', () => ({
   MoreVertical: () => <span>MoreVerticalIcon</span>,
 }));
 
+// ----------------------
 // Mock Next.js Image
-jest.mock('next/image', () => (props: any) => <img {...props} alt={props.alt} />);
+// ----------------------
+jest.mock('next/image', () => {
+  const NextImage = ({
+    src,
+    alt,
+    width,
+    height,
+  }: {
+    src: string;
+    alt?: string;
+    width?: number | string;
+    height?: number | string;
+  }) => <img src={src} alt={alt} width={width} height={height} />;
 
+  NextImage.displayName = 'NextImage';
+  return NextImage;
+});
+
+// ----------------------
+// Tests
+// ----------------------
 describe('ChangeResultsByCategory Component', () => {
   let container: HTMLElement;
 

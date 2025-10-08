@@ -1,11 +1,26 @@
 // __tests__/RequestTickets.test.tsx
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import RequestTickets from '@/components/RequestTickets';
 import '@testing-library/jest-dom';
 
 // Mock Next.js Image component
-jest.mock('next/image', () => ({ src, alt, width, height }: any) => {
-  return <img src={src} alt={alt} width={width} height={height} />;
+jest.mock('next/image', () => {
+  const NextImage = ({
+    src,
+    alt,
+    width,
+    height,
+  }: {
+    src: string;
+    alt?: string;
+    width?: number | string;
+    height?: number | string;
+  }) => <img src={src} alt={alt} width={width} height={height} />;
+
+  NextImage.displayName = 'NextImage';
+
+  return NextImage;
 });
 
 describe('RequestTickets Component', () => {
