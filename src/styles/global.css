@@ -1,0 +1,49 @@
+html, body{
+    color: black !important;
+}
+.loginBtn{
+    background-color: #1659E6;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 3vh;
+}
+.loginH1{
+    color: black;
+}
+.loginH1{
+    text-align: center;
+    font-style: bold;
+    font-weight: 700;
+    margin-bottom: 5vh;
+}
+.forgotPassword{
+    text-align: right;
+    color: #103FA3;
+    font-weight: 400;
+    font-size: 0.7em;
+    cursor: pointer;
+}
+.formClass{
+    border-radius: 2em;
+}
+.mainClass{
+    background-color: #F9FAFB;
+}
+.bazaraText{
+    color: #1659E6;
+    font-weight: 600;
+    font-style: semibold;
+    font-size: 20px;
+}
+.logoDiv{
+    display: flex;
+    gap: 0.5vw;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+.bodyDiv{
+    padding: 2em 10em;
+    background-color: white;
+}

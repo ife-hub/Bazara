@@ -1,0 +1,34 @@
+/* Input.css */
+
+/* Style the label text */
+.input-label {
+  color: #1f2937; /* dark gray */
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+/* Style the input value */
+.input-field {
+  width: 100%;
+  padding: 8px 12px;
+  /* border: 1px solid #cbd5e1; */
+  border-radius: 6px;
+  font-size: 14px;
+  color: #111827;
+}
+
+/* Focus state */
+.input-field:focus {
+  outline: none;
+  border-color: #3b82f6; /* blue border on focus */
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Style the error text */
+.input-error {
+  color: #dc2626; /* red color */
+  font-size: 12px;
+  margin-top: 2px;
+}
