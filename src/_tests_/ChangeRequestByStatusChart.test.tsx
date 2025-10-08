@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { ReactNode } from 'react';
 import { render, screen } from '@testing-library/react';
 import ChangeRequestByStatusChart from '@/components/ChangeRequestByStatusChart';
 import dashboardData from '@/app/data/dashboard';
@@ -8,7 +8,7 @@ import dashboardData from '@/app/data/dashboard';
 // ----------------------
 jest.mock('recharts', () => {
   const createMock = (name: string) => {
-    const Comp: React.FC<PropsWithChildren<{}>> = ({ children }) => (
+    const Comp: React.FC<{ children?: ReactNode }> = ({ children }) => (
       <div data-testid={name}>{children}</div>
     );
     Comp.displayName = name;
