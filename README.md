@@ -85,6 +85,11 @@ npm run type-check
 ```
 Runs TypeScript compiler to check for type errors without emitting files.
 
+### Tests
+```bash
+npm test
+```
+
 ---
 
 ## Project Structure
@@ -92,31 +97,76 @@ Runs TypeScript compiler to check for type errors without emitting files.
 ```
 bazara-dashboard/
 ├── public/
-│   ├── index.html
-│   └── favicon.ico
+│   └── images/
+│       ├── file.svg
+│       ├── globe.svg
+│       ├── next.svg
+│       ├── vercel.svg
+│       └── window.svg
 ├── src/
-│   ├── components/
-│   │   ├── Dashboard.tsx          # Main dashboard component
-│   │   ├── DashboardHeader.tsx    # Top navigation header
-│   │   ├── ServiceRequestBar.tsx  # Search and filter bar
-│   │   ├── MetricCard.tsx         # Reusable metric display card
-│   │   └── charts/                # Chart components
-│   │       ├── TicketsByAgent.tsx
-│   │       ├── ChangeByStatus.tsx
-│   │       └── TicketResolution.tsx
-│   ├── data/
-│   │   └── dashboardData.ts       # Mock data source
-│   ├── types/
-│   │   └── dashboard.types.ts     # TypeScript interfaces
-│   ├── utils/
-│   │   └── formatters.ts          # Utility functions
-│   ├── App.tsx                    # Root component
-│   ├── index.tsx                  # Entry point
-│   └── index.css                  # Global styles
+│   ├── _tests_/                     # Test files for components
+│   │   ├── AverageIncidentResponseTime.test.tsx
+│   │   ├── AverageResponseTime.test.tsx
+│   │   ├── ChangeRequestByStatus.test.tsx
+│   │   ├── ChangeRequestByStatusChart.test.tsx
+│   │   ├── ChangeResultsByCategory.test.tsx
+│   │   ├── Dashboard.test.tsx
+│   │   ├── IncidentTicketsTable.test.tsx
+│   │   ├── Input.test.tsx
+│   │   ├── PendingApprovals.test.tsx
+│   │   ├── PendingTickets.test.tsx
+│   │   ├── RequestTickets.test.tsx
+│   │   └── TicketsResolved.test.tsx
+│   ├── app/                         # App directory for routes and pages
+│   │   ├── api/
+│   │   │   ├── auth/
+│   │   │   │   ├── routes.ts
+│   │   │   │   └── logout/
+│   │   │   │       └── routes.ts
+│   │   ├── dashboard/
+│   │   │   ├── data/
+│   │   │   │   └── dashboard.ts
+│   │   │   └── page.tsx
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   ├── error.tsx
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/                  # Reusable UI components
+│   │   ├── AverageChangeResponseTime.tsx
+│   │   ├── AverageIncidentResponseTime.tsx
+│   │   ├── AwaitingApproval.tsx
+│   │   ├── ChangeRequestByStatus.tsx
+│   │   ├── ChangeRequestByStatusChart.tsx
+│   │   ├── ChangeResultByCategory.tsx
+│   │   ├── Headers.tsx
+│   │   ├── IncidentTicketsTable.tsx
+│   │   ├── Input.tsx
+│   │   ├── PendingApprovals.tsx
+│   │   ├── PendingTickets.tsx
+│   │   ├── ProfilePopup.tsx
+│   │   ├── RequestTickets.tsx
+│   │   ├── TicketResolutionChart.tsx
+│   │   └── TicketsResolved.tsx
+│   ├── lib/
+│   │   ├── auth-client.ts
+│   │   ├── store.ts
+│   │   └── validation.ts
+│   ├── styles/
+│   │   └── Input.css
+│   └── App.tsx
+├── .gitignore
+├── jest.config.js
+├── jest.setup.ts
+├── next.config.ts
 ├── package.json
+├── postcss.config.mjs
 ├── tsconfig.json
 ├── README.md
-└── ARCHITECTURE.md                # Architecture Decision Record
+└── ARCHITECTURE.md
+
 ```
 
 ---
